@@ -8,7 +8,7 @@ import pyproj
 import fiona
 from shapely.geometry import Point, Polygon
 
-my_lacounty_shapefile = 'c:/Users/bisuser/Downloads/DPW_CITY_BOUNDARIES/DPW_CITY_BOUNDARIES.shp'
+my_lacounty_shapefile = 'c:/Users/rasunci/gitstuff/DPW_CITY_BOUNDARIES/DPW_CITY_BOUNDARIES.shp'
 my_lacounty_gdf = gpd.read_file(my_lacounty_shapefile)
 
 my_fig = plt.figure(figsize=(16, 10), tight_layout=True)
@@ -18,7 +18,7 @@ my_ax.set_ylim(1550000, 1900000)
 my_lacounty_gdf.plot(ax=my_ax, color='orange', edgecolor='black')
 
 my_url = 'https://mds.bird.co/gbfs/los-angeles/free_bikes'
-my_file = 'c:/Users/bisuser/Documents/bird/free_bikes.json'
+my_file = 'c:/Users/rasunci/gitstuff/bird/free_bikes.json'
 my_bird_data = ''
 my_bird_locs = []
 
