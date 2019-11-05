@@ -1,38 +1,59 @@
 import numpy
-import matplotlib.pyplot as plt
+import matplotlib.pyplot
 import requests
 import json
 import pandas
-import geopandas as gpd
+import geopandas
 import pyproj
 import fiona
 from shapely.geometry import Point, Polygon
 import geoplot
-import geoplot.crs as gcrs
+import geoplot.crs
 import folium
 from folium.plugins import HeatMap
+from pyproj import Proj, transform
+import cartopy
 
 pass
 
 my_lacounty_shapefile = 'c:/Users/rasunci/gitstuff/DPW_CITY_BOUNDARIES/DPW_CITY_BOUNDARIES.shp'
-my_lacounty_gdf = gpd.read_file(my_lacounty_shapefile)
+my_lacounty_gdf = geopandas.read_file(my_lacounty_shapefile)
+print(my_lacounty_gdf.crs)
 print(my_lacounty_gdf)
+#my_lacounty_gdf.plot(color='orange', edgecolor='black')
+#matplotlib.pyplot.show()
+my_lacounty_gdf = my_lacounty_gdf.to_crs(epsg=4326)
+print(my_lacounty_gdf)
+print(my_lacounty_gdf.total_bounds)
+my_fig = matplotlib.pyplot.figure(figsize=(16, 10))
+my_ax = matplotlib.pyplot.subplot(projection=cartopy.crs.Mercator(), figure=my_fig)
+my_ax = geoplot.polyplot(my_lacounty_gdf, ax=my_ax, extent=(-118.8, 33.9, -118.0, 34.4))
+matplotlib.pyplot.show()
 
-my_fig = plt.figure(figsize=(16, 10), tight_layout=True)
-my_fig.add_axes([118.537902, 33.488056, 117.725165, 34.789895])
-my_ax = my_fig.add_subplot()
+#my_fig = matplotlib.pyplot.figure(figsize=(16, 10), tight_layout=True)
+#my_fig.add_axes([118.537902, 33.488056, 117.725165, 34.789895])
+#my_ax = my_fig.add_subplot()
+#geoplot.polyplot(my_lacounty_gdf, projection=geoplot.crs.WebMercator())
 #my_ax.set_xlim(6350000, 6650000)
 #my_ax.set_ylim(1550000, 1900000)
-#my_lacounty_gdf.plot(ax=my_ax, color='orange', edgecolor='black')
 #my_ax = my_lacounty_gdf.plot(ax=my_ax, color='orange', edgecolor='black')
 #my_ax.set_xlim(-118.537902, -117.725165)
 #my_ax.set_ylim(33.488056, 34.789895)
-my_lacounty_gdf = my_lacounty_gdf.to_crs(epsg=4326)
-print(my_lacounty_gdf)
-geoplot.polyplot(my_lacounty_gdf, projection=gcrs.WebMercator(), figsize=(16, 10), ax=my_ax,
- extent=(-118.537902, 33.488056, -117.725165, 34.789895))
-plt.show()
 
+"""
+my_p1 = Proj(init='epsg:2229')
+my_p2 = Proj(proj='latlong', datum='WGS84')
+my_lon, my_lat, my_z = transform(my_p1, my_p2, 6462560.206320852, 1779895.10190393, 0.0)
+print(my_lon, my_lat, my_z)
+"""
+"""
+my_lacounty_gdf = my_lacounty_gdf.to_crs(epsg=3857)
+print(my_lacounty_gdf.crs)
+print(my_lacounty_gdf)
+#geoplot.polyplot(my_lacounty_gdf, projection=geoplot.crs.WebMercator(), figsize=(16, 10), ax=my_ax, extent=(-118.537902, 33.488056, -117.725165, 34.789895))
+my_lacounty_gdf.plot(color='white', edgecolor='black')
+matplotlib.pyplot.show()
+"""
 pass
 
 """
@@ -66,11 +87,11 @@ my_lime_geom = [Point(float(lon), float(lat)) for lon, lat in zip(my_lime_df['lo
 print(my_lime_geom)
 my_lime_geom_df = pandas.DataFrame(my_lime_geom, columns=['geometry'])
 my_lime_gis_df = my_lime_df.join(my_lime_geom_df)
-my_lime_gpd = gpd.GeoDataFrame(my_lime_gis_df, crs={'init':'epsg:4326'})
+my_lime_gpd = geopandas.GeoDataFrame(my_lime_gis_df, crs={'init':'epsg:4326'})
 my_lime_gpd['geometry'] = my_lime_gpd['geometry'].to_crs(epsg=2229)
 
 my_lime_gpd.plot(ax=my_ax, color='blue')
 #geoplot.kdeplot(my_lime_gpd, ax='my_ax')
 
-plt.show()
+matplotlib.pyplot.show()
 """
