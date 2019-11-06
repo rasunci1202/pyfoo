@@ -34,7 +34,10 @@ else:
     my_lime_data = json.loads(my_json)
 
 my_lime_bikes = my_lime_data['data']['bikes']
-for i in range(50):
+#for i in range(150):
+my_lime_count = len(my_lime_data['data']['bikes'])
+
+for i in range(my_lime_count):
     my_bike = my_lime_bikes[i]['bike_id']
     my_lon = my_lime_bikes[i]['lon']
     my_lat = my_lime_bikes[i]['lat']
