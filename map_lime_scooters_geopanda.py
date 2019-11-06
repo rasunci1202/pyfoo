@@ -25,9 +25,9 @@ my_lacounty_gdf = geopandas.read_file(my_lacounty_shapefile)
 my_lacounty_gdf = my_lacounty_gdf.to_crs(epsg=4326)
 print(my_lacounty_gdf)
 print(my_lacounty_gdf.total_bounds)
-my_fig = matplotlib.pyplot.figure(figsize=(16, 10))
+my_fig = matplotlib.pyplot.figure(figsize=(14, 9))
 my_ax = matplotlib.pyplot.subplot(projection=cartopy.crs.Mercator(), figure=my_fig)
-my_ax = geoplot.polyplot(my_lacounty_gdf, ax=my_ax, extent=(-118.8, 33.9, -118.0, 34.4))
+#my_ax = geoplot.polyplot(my_lacounty_gdf, ax=my_ax, extent=(-118.8, 33.9, -118.0, 34.4))
 #matplotlib.pyplot.show()
 
 
@@ -61,9 +61,12 @@ my_lime_geom_df = pandas.DataFrame(my_lime_geom, columns=['geometry'])
 my_lime_gis_df = my_lime_df.join(my_lime_geom_df)
 my_lime_gdf = geopandas.GeoDataFrame(my_lime_gis_df, crs={'init':'epsg:4326'})
 print(my_lime_gdf)
-
+print(my_lime_gdf.total_bounds)
+my_bounds = my_lime_gdf.total_bounds
 #my_ax = geoplot.pointplot(my_lime_gdf, ax=my_ax)
-my_ax = geoplot.kdeplot(my_lime_gdf, ax=my_ax, n_levels=20, shade=False, shade_lowest=False, cmap='Greens')
+my_ax = geoplot.kdeplot(my_lime_gdf, ax=my_ax, n_levels=20, shade=True, shade_lowest=True, cmap='Greens')
+#my_ax = geoplot.polyplot(my_lacounty_gdf, ax=my_ax, extent=(-118.8, 33.9, -118.0, 34.4), zorder=1)
+my_ax = geoplot.polyplot(my_lacounty_gdf, ax=my_ax, extent=my_bounds, zorder=1)
 
 matplotlib.pyplot.show()
 
