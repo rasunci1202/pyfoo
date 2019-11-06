@@ -13,6 +13,7 @@ import folium
 from folium.plugins import HeatMap
 from pyproj import Proj, transform
 import cartopy
+import mpld3
 
 pass
 
@@ -70,3 +71,5 @@ my_ax = geoplot.polyplot(my_lacounty_gdf, ax=my_ax, extent=my_bounds, zorder=1)
 
 matplotlib.pyplot.show()
 
+#mpld3.show(my_fig)
+mpld3.save_html(my_fig, 'mpld3_test.html')
